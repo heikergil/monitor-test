@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    
+</head>
+<body>
+ <%for (let ingreso of ingresos) {%>
+    <% 
+    date = ingreso.llegada;
+    // var time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+    %> 
+    <ul>
+    <li><%= ingreso.lote  %> </li>
+    <li><%= ingreso.proveedor  %> </li>
+    <li><%= ingreso.piscina  %> </li>
+    <li><%= ingreso.llegada  %> </li>
+    <li><%= ingreso.numeroBines  %> </li>
+    <li><%= ingreso.remitido  %> </li>
+</ul>
+    <% } %> 
+        
+        
+</body>
+</html>
