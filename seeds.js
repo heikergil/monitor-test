@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
 const Ingreso = require('./models/ingresos');
+const { DateTime } = require("luxon");
 
 // connection to mongoDB with mongoose
-mongoose.connect('mongodb://localhost/monitor-test', {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect('mongodb://localhost:27017/monitor-test', {useNewUrlParser: true, useUnifiedTopology: true})
 .then(() => {
     console.log('CONECTED TO DBS')
 })
@@ -12,9 +13,9 @@ mongoose.connect('mongodb://localhost/monitor-test', {useNewUrlParser: true, use
 });
 
 var date = new Date();
-var today = date.setDate(date.getDate()-1)
 
-var dia = today;
+var datet = DateTime.now();
+var dia = datet.plus({days:1}).toISODate();
 var hora = date.getHours()+':'+date.getMinutes()+':'+date.getSeconds();
 
 console.log(new Date(dia));
@@ -110,8 +111,6 @@ const seedIngresos = [
         numeroBines: 8,
         remitido: 7200
     },
-
-    // lol
     {
         lote: 1237010,
         proveedor: 'PUNA',
@@ -163,10 +162,10 @@ const seedIngresos = [
 ]
 
 
-// Ingreso.insertMany(seedIngresos)
-//     .then(res => {
-//         console.log(res)
-//     })
-//     .catch(e => {
-//         console.log(e)
-//     })
+Ingreso.insertMany(seedIngresos)
+    .then(res => {
+        console.log(res)
+    })
+    .catch(e => {
+        console.log(e)
+    })

@@ -9,6 +9,16 @@
     
 </head>
 <body>
+
+    <h1>SHOWING LOGS FROM <%= fecha  %> </h1>
+
+    <form action="/index" method="get">
+<input type="date" id="fecha" name="fecha">
+<button>find by date</button>
+
+    </form>
+
+
  <%for (let ingreso of ingresos) {%>
     <% 
     date = ingreso.llegada;
@@ -18,6 +28,7 @@
     <li><%= ingreso.lote  %> </li>
     <li><%= ingreso.proveedor  %> </li>
     <li><%= ingreso.piscina  %> </li>
+    <li><%= ingreso.fecha.toISOString()  %> </li>
     <li><%= ingreso.llegada  %> </li>
     <li><%= ingreso.numeroBines  %> </li>
     <li><%= ingreso.remitido  %> </li>
