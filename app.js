@@ -24,23 +24,36 @@ app.use(express.urlencoded({extended:true}))
 // override with POST having ?_method=DELETE
 app.use(methodOverride('_method'))
 
+
+app.get('/', (req, res) => {
+res.send('This is monitor test APP, please go to  http://localhost:3000/index ')
+})
+
 app.get('/index', async (req, res) => {
-    const { fecha } = req.query;
-    const fechaAuto = DateTime.now().toISO();
-    if (fecha) {
-        console.log(fecha);
-        const ingresos = await Ingreso.find({"fecha" : fecha});
-        console.log(ingresos[0].fecha)
-        res.render('index.ejs', { ingresos, fecha });
+    const { fechaBusqueda } = req.query;
+    const fechaAuto = DateTime.now().toISODate();
+    if (fechaBusqueda) {
+        
+        const ingresos = await Ingreso.find({"fecha" : fechaBusqueda});
+        
+        res.render('index.ejs', { ingresos, fecha: fechaBusqueda });
     } else {
         console.log("auto0");
         const ingresos = await Ingreso.find({"fecha" : fechaAuto});
-        res.render('index.ejs', { ingresos, fecha: fechaAuto });
+        res.render('index.ejs', { ingresos, fechaBusqueda: fechaAuto, fecha: fechaAuto });
     }
-     
-    
+         
 })
 
+
+
+app.post('/new', async (req, res) => {
+    console.log(req.body)
+    const nuevoIngreso = new Ingreso(req.body)
+    await nuevoIngreso.save()
+    res.redirect('index')
+
+})
 
 
 

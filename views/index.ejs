@@ -13,9 +13,43 @@
     <h1>SHOWING LOGS FROM <%= fecha  %> </h1>
 
     <form action="/index" method="get">
-<input type="date" id="fecha" name="fecha">
+<input type="date" id="fechaBusqueda" name="fechaBusqueda">
 <button>find by date</button>
 
+    </form>
+
+    <h2>Nuevo Ingreso</h2>
+    <form action="/new" method="post">
+        <label for="lote">Lote:
+            <input type="number" name="lote">
+        </label>
+    
+    <label for="proveedor">
+        Razon Social:
+        <input type="text" name="proveedor">
+    </label>
+    <label for="piscina">
+        Piscina:
+        <input type="text" name="piscina">
+    </label>
+    <label for="fecha">
+        <input type="date" name="fecha" >  
+    </label>
+    <label for="llegada">
+        Hora Llegada:
+        <input type="time" name="llegada">
+    </label>
+    <label for="numeroBines">
+        Numero de Bines/Gavetas:
+        <input type="number" name="numeroBines">
+    </label>
+    <label for="remitido">
+        Libraje:
+        <input type="number" name="remitido">
+    </label>
+    
+    <button>Ingresar</button>
+    
     </form>
 
 
