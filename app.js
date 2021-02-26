@@ -38,13 +38,33 @@ app.get('/index', async (req, res) => {
         
         res.render('index.ejs', { ingresos, fecha: fechaBusqueda });
     } else {
-        console.log("auto0");
         const ingresos = await Ingreso.find({"fecha" : fechaAuto});
         res.render('index.ejs', { ingresos, fechaBusqueda: fechaAuto, fecha: fechaAuto });
     }
          
 })
 
+app.delete('/delete/:id', async (req, res) => {
+    const { id } = req.params;
+    const deletedProduct = await Ingreso.findByIdAndDelete(id);
+    console.log('deleted');
+    res.redirect('/index');
+})
+
+
+
+app.get('/show/:lote', async (req, res) => {
+    const { lote } = req.params;
+    console.log(lote);
+    const ingresos = await Ingreso.find({"lote":lote})
+    var totalRemitido = 0;
+    for (let ingreso of ingresos) {
+        totalRemitido = totalRemitido + ingreso.remitido;
+        console.log(totalRemitido);
+    }
+    console.log(totalRemitido)
+    res.render('show', { ingresos, totalRemitido  })
+})
 
 
 app.post('/new', async (req, res) => {
@@ -52,10 +72,7 @@ app.post('/new', async (req, res) => {
     const nuevoIngreso = new Ingreso(req.body)
     await nuevoIngreso.save()
     res.redirect('index')
-
 })
-
-
 
 app.get('/fecha', async (req, res) => {
     const fecha = "2021-02-23T05:09:47.521Z";

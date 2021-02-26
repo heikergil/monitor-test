@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show</title>
+
+    
+</head>
+<body>   
+    
+    </form>
+
+ <%for (let ingreso of ingresos) {%>
+    
+    <ul>
+    <li><%= ingreso.lote  %> </li>
+    <li><%= ingreso.proveedor  %> </li>
+    <li><%= ingreso.piscina  %> </li>
+    <li><%= ingreso.fecha.toISOString()  %> </li>
+    <li><%= ingreso.llegada  %> </li>
+    <li><%= ingreso.numeroBines  %> </li>
+    <li><%= ingreso.remitido  %> </li>
+</ul>
+    
+
+<% }%> 
+        <p>Total: <%= totalRemitido  %> </p>
+    <a href="/index">Main</a>
+</body>
+</html>

@@ -59,14 +59,20 @@
     // var time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
     %> 
     <ul>
-    <li><%= ingreso.lote  %> </li>
+    <li><a href="/show/<%= ingreso.lote %>"><%=ingreso.lote%></a> </li>
     <li><%= ingreso.proveedor  %> </li>
     <li><%= ingreso.piscina  %> </li>
     <li><%= ingreso.fecha.toISOString()  %> </li>
     <li><%= ingreso.llegada  %> </li>
     <li><%= ingreso.numeroBines  %> </li>
     <li><%= ingreso.remitido  %> </li>
+    <form action="/delete/<%=ingreso._id%>?_method=DELETE" method="POST">
+        <button>DELETE!</button>
+    </form>
+    
 </ul>
+
+
     <% } %> 
         
         
