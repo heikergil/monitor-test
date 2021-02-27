@@ -12,7 +12,7 @@
     
     </form>
 
- <%for (let ingreso of ingresos) {%>
+ 
     
     <ul>
     <li><%= ingreso.lote  %> </li>
@@ -23,10 +23,7 @@
     <li><%= ingreso.numeroBines  %> </li>
     <li><%= ingreso.remitido  %> </li>
 </ul>
-    
-
-<% }%> 
-<p> Libraje:<%= totalRemitido  %> </p>
+    <a href="/update/<%= ingreso._id%> ">Edit</a>
 
     <a href="/index">Main</a>
 </body>

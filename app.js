@@ -60,7 +60,6 @@ app.get('/show/:lote', async (req, res) => {
     var totalRemitido = 0;
     for (let ingreso of ingresos) {
         totalRemitido = totalRemitido + ingreso.remitido;
-        console.log(totalRemitido);
     }
     console.log(totalRemitido)
     res.render('show', { ingresos, totalRemitido  })
@@ -74,11 +73,25 @@ app.post('/new', async (req, res) => {
     res.redirect('index')
 })
 
-app.get('/fecha', async (req, res) => {
-    const fecha = "2021-02-23T05:09:47.521Z";
-    const ingresos = await Ingreso.find({"fecha":{$lt:"2021-02-23T00:00:00.00Z",$gte:"2021-02-22T00:00:00.00Z" }});
-    console.log(ingresos);
-    res.render('index.ejs', { ingresos });
+
+app.get('/ingreso/:id', async (req, res) => {
+    const { id } = req.params;
+    console.log(id)
+    const ingreso = await Ingreso.findById(id);
+    res.render('ingreso', { ingreso })
+  
+})
+
+app.get('/update/:id', async (req, res)=> {
+    const { id } = req.params;
+    const ingreso = await Ingreso.findById(id);
+    res.render('update', { ingreso })
+})
+
+app.put('/ingreso/update/:id', async (req, res) => {
+    const { id } = req.params;
+    const ingreso = await Ingreso.findByIdAndUpdate(id, req.body, {runValidators: true, new: true, useFindAndModify: false })
+    res.render('ingreso', { ingreso }) 
 })
 
 app.listen(3000, () => {
