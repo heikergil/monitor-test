@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-
-    
-</head>
-<body>
+<% layout('layouts/boilerplate') -%>
 
     <h1>SHOWING LOGS FROM <%= fecha  %> </h1>
 
@@ -58,7 +48,7 @@
     date = ingreso.llegada;
     // var time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
     %> 
-    <ul>
+    <ul class="d-flex w-100 justify-content-evenly border border-dark">
     <li><a href="/show/<%= ingreso.lote %>"><%=ingreso.lote%></a> </li>
     <li><%= ingreso.proveedor  %> </li>
     <li><%= ingreso.piscina  %> </li>
@@ -71,10 +61,4 @@
     </form>
     
 </ul>
-
-
     <% } %> 
-        
-        
-</body>
-</html>
