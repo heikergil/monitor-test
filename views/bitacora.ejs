@@ -1,1 +1,32 @@
 <% layout('layouts/boilerplate') -%>
+
+<% var item = 0; %> 
+
+<div class="container w-100 d-flex flex-row justify-content-evenly">
+    <span class="w-12">item</span>
+    <span class="w-12">lote</span>
+    <span class="w-12">proveedor</span>
+    <span class="w-12">piscina</span>
+    <span class="w-12">fecha</span>
+    <span class="w-12">llegada</span>
+    <span class="w-12">numero Bines</span> 
+    <span class="w-12">Libras</span>
+</div>
+<%for (let ingreso of ingresos) {%>
+    <% 
+    date = ingreso.llegada;
+    
+    item += 1
+    %> <div class="container w-100 d-flex flex-row justify-content-evenly">
+        <span class="w-12.5"> <%= item  %> </span>
+        <span class="w-12.5"><%=ingreso.lote%></span>
+        <span class="w-12.5"><%= ingreso.proveedor  %> </span>
+        <span class="w-12.5"><%= ingreso.piscina  %></span>
+        <span class="w-12.5"><%= ingreso.fecha.toISOString()  %></span>
+        <span class="w-12.5"><%=ingreso.llegada%></span>
+        <span class="w-12.5"><%= ingreso.numeroBines  %> </span> 
+        <span class="w-12.5"><%= ingreso.remitido  %></span>
+    </div>
+   
+              
+    <% } %> 

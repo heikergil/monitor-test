@@ -6,7 +6,7 @@ const Ingreso = require('./models/ingresos');
 const methodOverride = require('method-override');
 const { DateTime } = require("luxon");
 const AppError = require('./AppError')
-var morgan = require('morgan')
+const morgan = require('morgan')
 const engine = require('ejs-mate');
 
 
@@ -115,6 +115,22 @@ app.use((err, req,res, next) => {
     const { status = 500, message = 'Something Went Wrong' } = err;
     res.status(status).send(message);
 })
+
+
+app.get('/bitacora', wrapAsync(async (req, res, next) => {
+    
+    const { fechaBusqueda } = req.query;
+    const fechaAuto = DateTime.now().toISODate();
+if (fechaBusqueda) {
+    const ingresos = await Ingreso.find({"fecha" : fechaBusqueda});
+    res.render('index.ejs', { ingresos, fecha: fechaBusqueda });
+} else {
+    const ingresos = await Ingreso.find({"fecha" : fechaAuto});
+    res.render('bitacora.ejs', { ingresos, fechaBusqueda: fechaAuto, fecha: fechaAuto });
+}
+
+     
+}))
 app.listen(3000, () => {
     console.log('MonitorApp listening on port 3000');
 })

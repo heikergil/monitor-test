@@ -14,8 +14,8 @@ mongoose.connect('mongodb://localhost:27017/monitor-test', {useNewUrlParser: tru
 
 var date = new Date();
 
-var datet = DateTime.now();
-var dia = datet.plus({days:1}).toISODate();
+var dia = DateTime.now().toISODate();
+// var dia = datet.plus({days:1}).toISODate();
 var hora = date.getHours()+':'+date.getMinutes()+':'+date.getSeconds();
 
 console.log(new Date(dia));
