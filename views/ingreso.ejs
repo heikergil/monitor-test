@@ -1,30 +1,67 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Show</title>
+<% layout('layouts/boilerplate') -%>
+<h1 class="text-center mb-5">INGRESO MP - BRISAS  <%= fecha %> </h1>
 
+<h2>Nuevo Ingreso</h2>
+<form action="/new" method="post">
     
-</head>
-<body>   
-    
-    </form>
+    <label for="lote">
+        <input class="form-control" type="number" name="lote" placeholder="Lote">
+    </label>
 
- 
-    
-    <ul>
-    <li><%= ingreso.lote  %> </li>
-    <li><%= ingreso.proveedor  %> </li>
-    <li><%= ingreso.piscina  %> </li>
-    <li><%= ingreso.fecha.toISOString()  %> </li>
-    <li><%= ingreso.llegada  %> </li>
-    <li><%= ingreso.numeroBines  %> </li>
-    <li><%= ingreso.remitido  %> </li>
-</ul>
-    <a href="/update/<%= ingreso._id%> ">Edit</a>
+<label for="proveedor">
+    <input class="form-control" type="text" name="proveedor" placeholder="Proveedor">
+</label>
+<label for="piscina">
+    <input class="form-control" type="text" name="piscina" placeholder="Piscina">
+</label>
+<!-- <label for="fecha">
+    <input class="form-control" type="date" name="fecha" >  
+</label> -->
+<label for="llegada">
+    <input class="form-control" type="time" name="llegada" placeholder="Hora Llegada">
+</label>
+<label for="numeroBines">
+    <input class="form-control" type="number" name="numeroBines" placeholder="Bines/gavetas">
+</label>
+<label for="remitido">
+    <input class="form-control" type="number" name="remitido" placeholder="Libraje">
+</label>
 
-    <a href="/index">Main</a>
-</body>
-</html>
+<button type="button" class="btn btn-primary">Ingresar</button>
+
+</form>
+
+
+
+
+
+
+<% var item = 0; %> 
+
+
+<div class="grid-ingreso w-100">
+    <span class="item border border-dark py-1 px-3 text-center">item</span>
+    <span class="lote border border-dark py-1 px-3 text-center">lote</span>
+    <span class="proveedor border border-dark py-1 px-3 text-center">proveedor</span>
+    <span class="piscina border border-dark py-1 px-3 text-center">piscina</span>
+    <span class="llegada border border-dark py-1 px-3 text-center">llegada</span>
+    <span class="bines border border-dark py-1 px-3 text-center">#Bines</span> 
+    <span class="libras border border-dark py-1 px-3 text-center">Libras</span>
+</div>
+<%for (let ingreso of ingresos) {%>
+    <% 
+    date = ingreso.llegada;
+    
+    item += 1
+    %> <div class="grid-ingreso w-100">
+        <span class="item border border-dark py-1 px-3 text-center"><%=item%></span>
+        <span class="lote border border-dark py-1 px-3 text-center" ><a href="/show/<%= ingreso.lote %>"><%=ingreso.lote%></a></span>
+        <span class="proveedor border border-dark py-1 px-3 text-center"><%=ingreso.proveedor%></span>
+        <span class="piscina border border-dark py-1 px-3 text-center" ><%=ingreso.piscina%></span>
+        <span class="llegada border border-dark py-1 px-3 text-center" ><%=ingreso.llegada%></span>
+        <span class="bines border border-dark py-1 px-3 text-center"><%=ingreso.numeroBines%></span> 
+        <span class="libras border border-dark py-1 px-3 text-center" ><%=ingreso.remitido%></span>
+    </div>
+   
+              
+    <% } %> 

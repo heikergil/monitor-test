@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+
 const ingresoSchema = new mongoose.Schema({
     lote: {
         type: Number,

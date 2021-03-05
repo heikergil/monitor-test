@@ -42,47 +42,23 @@ app.get('/', (req, res) => {
 res.send('This is monitor test APP, please go to  http://localhost:3000/index ')
 })
 
-app.get('/index', wrapAsync(async (req, res, next) => {
+app.get('/ingreso', wrapAsync(async (req, res, next) => {
     
         const { fechaBusqueda } = req.query;
         const fechaAuto = DateTime.now().toISODate();
     if (fechaBusqueda) {
         const ingresos = await Ingreso.find({"fecha" : fechaBusqueda});
-        res.render('index.ejs', { ingresos, fecha: fechaBusqueda });
+        res.render('ingreso.ejs', { ingresos, fecha: fechaBusqueda });
     } else {
         const ingresos = await Ingreso.find({"fecha" : fechaAuto});
-        res.render('index.ejs', { ingresos, fechaBusqueda: fechaAuto, fecha: fechaAuto });
+        res.render('ingreso.ejs', { ingresos, fechaBusqueda: fechaAuto, fecha: fechaAuto });
     }
    
          
 }))
 
 
-app.get('/error', (req, res) => {
-    chicken.fly();
-})
-app.delete('/delete/:id', wrapAsync(async (req, res, next) => {
-        const { id } = req.params;
-    const deletedProduct = await Ingreso.findByIdAndDelete(id);
-    console.log('deleted');
-    res.redirect('/index');
-  
-    
-}))
 
-
-
-app.get('/show/:lote', wrapAsync( async (req, res, next) => {
-    
-        const { lote } = req.params;
-        const ingresos = await Ingreso.find({"lote":lote})
-        var totalRemitido = 0;
-            for (let ingreso of ingresos) {
-                totalRemitido = totalRemitido + ingreso.remitido;
-                }
-        res.render('show', { ingresos, totalRemitido  })
-    
-}))
 
 
 app.post('/new', wrapAsync(async (req, res, next) => {
@@ -118,7 +94,7 @@ app.use((err, req,res, next) => {
     res.status(status).send(message);
 })
 
-// 
+
 app.get('/bitacora', wrapAsync(async (req, res, next) => {
     
     const { fechaBusqueda } = req.query;
@@ -133,6 +109,21 @@ if (fechaBusqueda) {
 
      
 }))
+
+app.get('/show/:lote', wrapAsync( async (req, res, next) => {
+    
+    const { lote } = req.params;
+    const ingresos = await Ingreso.find({"lote":lote})
+    var totalRemitido = 0;
+    var totalBines = 0;
+        for (let ingreso of ingresos) {
+            totalRemitido += ingreso.remitido;
+            totalBines += ingreso.numeroBines
+            }
+    res.render('show', { ingresos, totalRemitido, totalBines   })
+
+}))
+
 app.listen(3000, () => {
     console.log('MonitorApp listening on port 3000');
 })

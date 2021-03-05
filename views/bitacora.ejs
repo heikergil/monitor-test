@@ -19,7 +19,7 @@
     item += 1
     %> <div class="grid-ingreso w-100">
         <span class="item border border-dark py-1 px-3 text-center"><%=item%></span>
-        <span class="lote border border-dark py-1 px-3 text-center" ><%=ingreso.lote%></span>
+        <span class="lote border border-dark py-1 px-3 text-center" ><a href="/show/<%= ingreso.lote %>"><%=ingreso.lote%></a></span>
         <span class="proveedor border border-dark py-1 px-3 text-center"><%=ingreso.proveedor%></span>
         <span class="piscina border border-dark py-1 px-3 text-center" ><%=ingreso.piscina%></span>
         <span class="llegada border border-dark py-1 px-3 text-center" ><%=ingreso.llegada%></span>
@@ -34,5 +34,4 @@
     <form action="/bitacora" method="get">
         <input type="date" id="fechaBusqueda" name="fechaBusqueda">
         <button>find by date</button>
-        
-            </form>
+        </form>
