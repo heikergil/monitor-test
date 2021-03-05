@@ -13,6 +13,8 @@ const engine = require('ejs-mate');
 
 app.use(morgan('tiny'));
 
+app.use(express.static(__dirname + '/public'));
+
 // connection to mongoDB with mongoose
 mongoose.connect('mongodb://localhost:27017/monitor-test', {useNewUrlParser: true, useUnifiedTopology: true})
 .then(() => {
@@ -116,14 +118,14 @@ app.use((err, req,res, next) => {
     res.status(status).send(message);
 })
 
-
+// 
 app.get('/bitacora', wrapAsync(async (req, res, next) => {
     
     const { fechaBusqueda } = req.query;
     const fechaAuto = DateTime.now().toISODate();
 if (fechaBusqueda) {
     const ingresos = await Ingreso.find({"fecha" : fechaBusqueda});
-    res.render('index.ejs', { ingresos, fecha: fechaBusqueda });
+    res.render('bitacora.ejs', { ingresos, fecha: fechaBusqueda });
 } else {
     const ingresos = await Ingreso.find({"fecha" : fechaAuto});
     res.render('bitacora.ejs', { ingresos, fechaBusqueda: fechaAuto, fecha: fechaAuto });

@@ -2,31 +2,37 @@
 
 <% var item = 0; %> 
 
-<div class="container w-100 d-flex flex-row justify-content-evenly">
-    <span class="w-12">item</span>
-    <span class="w-12">lote</span>
-    <span class="w-12">proveedor</span>
-    <span class="w-12">piscina</span>
-    <span class="w-12">fecha</span>
-    <span class="w-12">llegada</span>
-    <span class="w-12">numero Bines</span> 
-    <span class="w-12">Libras</span>
+<h1 class="text-center mb-5">INGRESO MP - BRISAS  <%= fecha %> </h1>
+<div class="grid-ingreso w-100">
+    <span class="item border border-dark py-1 px-3 text-center">item</span>
+    <span class="lote border border-dark py-1 px-3 text-center">lote</span>
+    <span class="proveedor border border-dark py-1 px-3 text-center">proveedor</span>
+    <span class="piscina border border-dark py-1 px-3 text-center">piscina</span>
+    <span class="llegada border border-dark py-1 px-3 text-center">llegada</span>
+    <span class="bines border border-dark py-1 px-3 text-center">#Bines</span> 
+    <span class="libras border border-dark py-1 px-3 text-center">Libras</span>
 </div>
 <%for (let ingreso of ingresos) {%>
     <% 
     date = ingreso.llegada;
     
     item += 1
-    %> <div class="container w-100 d-flex flex-row justify-content-evenly">
-        <span class="w-12.5"> <%= item  %> </span>
-        <span class="w-12.5"><%=ingreso.lote%></span>
-        <span class="w-12.5"><%= ingreso.proveedor  %> </span>
-        <span class="w-12.5"><%= ingreso.piscina  %></span>
-        <span class="w-12.5"><%= ingreso.fecha.toISOString()  %></span>
-        <span class="w-12.5"><%=ingreso.llegada%></span>
-        <span class="w-12.5"><%= ingreso.numeroBines  %> </span> 
-        <span class="w-12.5"><%= ingreso.remitido  %></span>
+    %> <div class="grid-ingreso w-100">
+        <span class="item border border-dark py-1 px-3 text-center"><%=item%></span>
+        <span class="lote border border-dark py-1 px-3 text-center" ><%=ingreso.lote%></span>
+        <span class="proveedor border border-dark py-1 px-3 text-center"><%=ingreso.proveedor%></span>
+        <span class="piscina border border-dark py-1 px-3 text-center" ><%=ingreso.piscina%></span>
+        <span class="llegada border border-dark py-1 px-3 text-center" ><%=ingreso.llegada%></span>
+        <span class="bines border border-dark py-1 px-3 text-center"><%=ingreso.numeroBines%></span> 
+        <span class="libras border border-dark py-1 px-3 text-center" ><%=ingreso.remitido%></span>
     </div>
    
               
     <% } %> 
+
+
+    <form action="/bitacora" method="get">
+        <input type="date" id="fechaBusqueda" name="fechaBusqueda">
+        <button>find by date</button>
+        
+            </form>
