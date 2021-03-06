@@ -2,33 +2,31 @@
 
 <% var item = 0; %> 
 
-<h1 class="text-center mb-5">INGRESO MP - BRISAS  LOTE: <%= ingresos.lote  %> </h1>
+<h1 class="text-center mb-5">INGRESO MP - BRISAS  LOTE: <%= ingreso.lote  %> </h1>
 <div class="grid-ingreso w-100">
-    <span class="item border border-dark py-1 px-3 text-center">item</span>
-    <span class="lote border border-dark py-1 px-3 text-center">lote</span>
-    <span class="proveedor border border-dark py-1 px-3 text-center">proveedor</span>
-    <span class="piscina border border-dark py-1 px-3 text-center">piscina</span>
-    <span class="llegada border border-dark py-1 px-3 text-center">llegada</span>
-    <span class="bines border border-dark py-1 px-3 text-center">#Bines</span> 
-    <span class="libras border border-dark py-1 px-3 text-center">Libras</span>
+    <span class="item border border-dark py-1 text-center">item</span>
+    <span class="lote border border-dark py-1  text-center">lote</span>
+    <span class="proveedor border border-dark py-1  text-center">proveedor</span>
+    <span class="piscina border border-dark py-1  text-center">piscina</span>
+    <span class="llegada border border-dark py-1  text-center">llegada</span>
+    <span class="bines border border-dark py-1  text-center">#Bines</span> 
+    <span class="libras border border-dark py-1 text-center">Libras</span>
 </div>
-<%for (let ingreso of ingresos) {%>
     <% 
-    
     item += 1
-    %> <div class="grid-ingreso w-100">
+    %> <div class="grid-ingreso w-100 mb-1">
         <span class="item border border-dark py-1 px-3 text-center"><%=item%></span>
-        <span class="lote border border-dark py-1 px-3 text-center" ><a href="/show/<%= ingreso.lote %>"><%=ingreso.lote%></a></span>
-        <span class="proveedor border border-dark py-1 px-3 text-center"><%=ingreso.proveedor%></span>
-        <span class="piscina border border-dark py-1 px-3 text-center" ><%=ingreso.piscina%></span>
-        <span class="llegada border border-dark py-1 px-3 text-center" ><%=ingreso.llegada%></span>
-        <span class="bines border border-dark py-1 px-3 text-center"><%=ingreso.numeroBines%></span> 
-        <span class="libras border border-dark py-1 px-3 text-center" ><%=ingreso.remitido%></span>
+        <span class="lote border border-dark py-1 px-3 text-center" ><a href="/show/<%=ingreso.lote %>"><%=ingreso.lote%></a></span>
+        <span class="proveedor border border-dark py-1  text-center"><%=ingreso.proveedor%></span>
+        <span class="piscina border border-dark py-1  text-center" ><%=ingreso.piscina%></span>
+        <span class="llegada border border-dark py-1  text-center" ><%=ingreso.llegada%></span>
+        <span class="bines border border-dark py-1  text-center"><%=ingreso.numeroBines%></span> 
+        <span class="libras border border-dark py-1  text-center" ><%=ingreso.remitido%></span>
     </div>
-   
-              
-    <% } %> 
-    <div class="w-100 mt-2">
-        <span class="w-100 border border-dark py-1 px-3 text-center">Numero Total Bines: <%= totalBines  %> </span>
-        <span class="w-100 border border-dark py-1 px-3 text-center">Libraje Total: <%= totalRemitido  %> </span>
-    </div>
+    <a type="button" class="btn btn-secondary" href="/ingreso">BACK</a>
+    <a type="button" class="btn btn-primary" href="/update/<%=ingreso._id%>">EDIT</a>
+    <form action="/delete/<%=ingreso._id%>?_method=DELETE" method="POST">
+        <button type="submit" class="btn btn-danger">DELETE</button>
+    </form>
+    
+    </button>

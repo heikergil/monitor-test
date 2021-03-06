@@ -57,30 +57,38 @@ app.get('/ingreso', wrapAsync(async (req, res, next) => {
          
 }))
 
-
-
-
-
 app.post('/new', wrapAsync(async (req, res, next) => {
         const nuevoIngreso = new Ingreso(req.body)
-        await nuevoIngreso.save()
-        res.redirect('index') 
+        if (nuevoIngreso.fecha) {
+            await nuevoIngreso.save()
+            console.log(nuevoIngreso);
+            res.redirect('ingreso') 
+        } else {
+            var date = DateTime.now();
+            nuevoIngreso.fecha = date.toISODate();
+            await nuevoIngreso.save()
+            console.log(nuevoIngreso);
+            res.redirect('ingreso')  
+        }
+       
 }))
 
 
-app.get('/ingreso/:id', wrapAsync(async (req, res, next) => {
+app.get('/show/:id', wrapAsync(async (req, res, next) => {
         const { id } = req.params;
         const ingreso = await Ingreso.findById(id);
     if (!ingreso) {
         return next(new AppError('Ingreso No Encontrado', 404));
     }
-        res.render('ingreso', { ingreso }) 
+        res.render('show', { ingreso }) 
 }))
 
 app.get('/update/:id', wrapAsync(async (req, res, next)=> {
         const { id } = req.params;
         const ingreso = await Ingreso.findById(id);
-        res.render('update', { ingreso })   
+        console.log(ingreso.fecha)
+        
+        res.render('update', { ingreso, fecha, llegada })   
 }))
 
 app.put('/ingreso/update/:id', wrapAsync(async (req, res, next) => {
@@ -122,6 +130,12 @@ app.get('/show/:lote', wrapAsync( async (req, res, next) => {
             }
     res.render('show', { ingresos, totalRemitido, totalBines   })
 
+}))
+
+app.delete('/delete/:id', wrapAsync(async(req, res, next) => {
+        const { id } = req.params;
+        const ingreso = await Ingreso.findByIdAndDelete(id)
+        res.redirect('/ingreso')
 }))
 
 app.listen(3000, () => {

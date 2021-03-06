@@ -1,16 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-
-    
-</head>
-<body>
-
-
+<% layout('layouts/boilerplate') -%>
     <h2>Editar ingreso</h2>
     <form action='/ingreso/update/<%= ingreso._id%>?_method=PUT' method="post">
         <label for="lote">Lote:
@@ -26,11 +14,11 @@
         <input type="text" name="piscina" value="<%= ingreso.piscina  %>">
     </label>
     <label for="fecha">
-        <input type="date" name="fecha" value="<%=ingreso.fecha%>">  
+        <input type="date" name="fecha" value="<%=fecha%>">  
     </label>
     <label for="llegada">
         Hora Llegada:
-        <input type="time" name="llegada" value="<%= ingreso.llegada  %>">
+        <input type="time" name="llegada" value="<%= llegada  %>">
     </label>
     <label for="numeroBines">
         Numero de Bines/Gavetas:
