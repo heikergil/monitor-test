@@ -39,36 +39,25 @@ function wrapAsync(fn) {
 }
 
 app.get('/', (req, res) => {
+
 res.send('This is monitor test APP, please go to  http://localhost:3000/index ')
 })
 
-app.get('/ingreso', wrapAsync(async (req, res, next) => {
-    
-        const { fechaBusqueda } = req.query;
-        const fechaAuto = DateTime.now().toISODate();
-    if (fechaBusqueda) {
-        const ingresos = await Ingreso.find({"fecha" : fechaBusqueda});
-        res.render('ingreso.ejs', { ingresos, fecha: fechaBusqueda });
-    } else {
-        const ingresos = await Ingreso.find({"fecha" : fechaAuto});
-        res.render('ingreso.ejs', { ingresos, fechaBusqueda: fechaAuto, fecha: fechaAuto });
-    }
-   
-         
-}))
 
 app.post('/new', wrapAsync(async (req, res, next) => {
         const nuevoIngreso = new Ingreso(req.body)
         if (nuevoIngreso.fecha) {
+            nuevoIngreso.fecha = new Date(nuevoIngreso.fecha);
             await nuevoIngreso.save()
             console.log(nuevoIngreso);
-            res.redirect('ingreso') 
+            res.redirect('bitacora'); 
         } else {
-            var date = DateTime.now();
-            nuevoIngreso.fecha = date.toISODate();
+            var date = new Date();
+            console.log(date);
+            nuevoIngreso.fecha = date;
             await nuevoIngreso.save()
             console.log(nuevoIngreso);
-            res.redirect('ingreso')  
+            res.redirect('bitacora')  
         }
        
 }))
@@ -86,9 +75,10 @@ app.get('/show/:id', wrapAsync(async (req, res, next) => {
 app.get('/update/:id', wrapAsync(async (req, res, next)=> {
         const { id } = req.params;
         const ingreso = await Ingreso.findById(id);
-        console.log(ingreso.fecha)
-        
-        res.render('update', { ingreso, fecha, llegada })   
+        const fecha = date.toISODate();
+        const llegada = new DateTime(ingreso.fecha);
+        const hora = date.toFormat('HH:mm');
+        res.render('update', { ingreso, fecha, llegada:hora })   
 }))
 
 app.put('/ingreso/update/:id', wrapAsync(async (req, res, next) => {
@@ -106,19 +96,37 @@ app.use((err, req,res, next) => {
 app.get('/bitacora', wrapAsync(async (req, res, next) => {
     
     const { fechaBusqueda } = req.query;
-    const fechaAuto = DateTime.now().toISODate();
+
+    const date = new Date(fechaBusqueda)
+    date.setUTCHours(0,0,0,0);
+    const datePlus = new Date(date);
+    datePlus.setDate(datePlus.getDate() + 1)
+
+    const fechaAuto = new Date();
+    const horaAuto = fechaAuto.setUTCHours(0,0,0,0);
+    console.log(horaAuto);
+    console.log('fechaauto');
+    const autoPlus = new Date(horaAuto);
+    autoPlus.setDate(autoPlus.getDate() + 1)
+
 if (fechaBusqueda) {
-    const ingresos = await Ingreso.find({"fecha" : fechaBusqueda});
-    res.render('bitacora.ejs', { ingresos, fecha: fechaBusqueda });
+    console.log(date)
+    console.log(datePlus)
+    const ingresos = await Ingreso.find({"fecha" : {$gte: date, $lt: datePlus}});
+    res.render('bitacora', { ingresos, fecha: fechaBusqueda });
 } else {
-    const ingresos = await Ingreso.find({"fecha" : fechaAuto});
-    res.render('bitacora.ejs', { ingresos, fechaBusqueda: fechaAuto, fecha: fechaAuto });
+    const options = {year: 'numeric', month: 'numeric', day: 'numeric' };
+    console.log(fechaAuto)
+    console.log(autoPlus)
+    const ingresos = await Ingreso.find({"fecha" : {$gte: fechaAuto, $lt: autoPlus}});
+    res.render('bitacora', { ingresos, fechaBusqueda: fechaAuto, fecha: fechaAuto.toLocaleDateString('en-GB', options)});
 }
 
      
-}))
+}
+))
 
-app.get('/show/:lote', wrapAsync( async (req, res, next) => {
+app.get('/lote/:lote', wrapAsync( async (req, res, next) => {
     
     const { lote } = req.params;
     const ingresos = await Ingreso.find({"lote":lote})
@@ -128,7 +136,7 @@ app.get('/show/:lote', wrapAsync( async (req, res, next) => {
             totalRemitido += ingreso.remitido;
             totalBines += ingreso.numeroBines
             }
-    res.render('show', { ingresos, totalRemitido, totalBines   })
+    res.render('lote', { ingresos, totalRemitido, totalBines, lote })
 
 }))
 

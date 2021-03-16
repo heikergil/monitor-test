@@ -23,10 +23,12 @@
         <span class="bines border border-dark py-1  text-center"><%=ingreso.numeroBines%></span> 
         <span class="libras border border-dark py-1  text-center" ><%=ingreso.remitido%></span>
     </div>
-    <a type="button" class="btn btn-secondary" href="/ingreso">BACK</a>
-    <a type="button" class="btn btn-primary" href="/update/<%=ingreso._id%>">EDIT</a>
-    <form action="/delete/<%=ingreso._id%>?_method=DELETE" method="POST">
-        <button type="submit" class="btn btn-danger">DELETE</button>
-    </form>
+    <div class="container d-flex">
+        <a type="button" class="btn btn-secondary mx-1" href="/bitacora">BACK</a>
+        <a type="button" class="btn btn-primary mx-1" href="/update/<%=ingreso._id%>">EDIT</a>
+        <form class="mx-3" action="/delete/<%=ingreso._id%>?_method=DELETE" method="POST">
+            <button type="submit" class="btn btn-danger">DELETE</button>
+        </form></div>
+    
     
     </button>
