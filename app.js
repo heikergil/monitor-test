@@ -45,20 +45,12 @@ res.send('This is monitor test APP, please go to  http://localhost:3000/index ')
 
 
 app.post('/new', wrapAsync(async (req, res, next) => {
+        console.log(req.body);
         const nuevoIngreso = new Ingreso(req.body)
-        if (nuevoIngreso.fecha) {
-            nuevoIngreso.fecha = new Date(nuevoIngreso.fecha);
-            await nuevoIngreso.save()
-            console.log(nuevoIngreso);
-            res.redirect('bitacora'); 
-        } else {
-            var date = new Date();
-            console.log(date);
-            nuevoIngreso.fecha = date;
-            await nuevoIngreso.save()
-            console.log(nuevoIngreso);
-            res.redirect('bitacora')  
-        }
+        await nuevoIngreso.save();
+        res.redirect('/bitacora')
+
+        
        
 }))
 
@@ -116,10 +108,11 @@ if (fechaBusqueda) {
     res.render('bitacora', { ingresos, fecha: fechaBusqueda });
 } else {
     const options = {year: 'numeric', month: 'numeric', day: 'numeric' };
-    console.log(fechaAuto)
+    console.log(fechaAuto.UTC())
     console.log(autoPlus)
     const ingresos = await Ingreso.find({"fecha" : {$gte: fechaAuto, $lt: autoPlus}});
-    res.render('bitacora', { ingresos, fechaBusqueda: fechaAuto, fecha: fechaAuto.toLocaleDateString('en-GB', options)});
+    res.render('bitacora', { ingresos, fechaBusqueda: fechaAuto.toLocaleDateString(), fecha: fechaAuto});
+    // .toLocaleDateString('en-GB', options)
 }
 
      
@@ -143,7 +136,7 @@ app.get('/lote/:lote', wrapAsync( async (req, res, next) => {
 app.delete('/delete/:id', wrapAsync(async(req, res, next) => {
         const { id } = req.params;
         const ingreso = await Ingreso.findByIdAndDelete(id)
-        res.redirect('/ingreso')
+        res.redirect('/bitacora')
 }))
 
 app.listen(3000, () => {
