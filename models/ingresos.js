@@ -1,4 +1,7 @@
+const { text } = require('express');
+const { DateTime } = require('luxon');
 const mongoose = require('mongoose');
+
 
 const ingresoSchema = new mongoose.Schema({
     lote: {
@@ -14,12 +17,12 @@ const ingresoSchema = new mongoose.Schema({
         required: true
     },
     fecha: {
-        type: String,
-        required: true
+        type: Date,
+        required: true,
     },
     llegada: {
-        type: String,
-        required: true
+        type:String,
+        required: true,
     },
     numeroBines: {
         type: Number,

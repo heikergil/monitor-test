@@ -1,0 +1,72 @@
+<% layout('layouts/boilerplate') -%>
+
+<h2 class="my-3 text-center">NUEVO INGRESO</h2>
+    <form class="d-flex" action="/new" method="post">
+    
+        <label for="lote">
+            <input class="form-control" type="number" name="lote" placeholder="Lote">
+        </label>
+    
+    <label for="proveedor">
+        <input class="form-control" type="text" name="proveedor" placeholder="Proveedor">
+    </label>
+    <label for="piscina">
+        <input class="form-control" type="text" name="piscina" placeholder="Piscina">
+    </label>
+    <label for="fecha">
+        <input class="form-control" type="date" name="fecha" >  
+    </label>
+    <label for="llegada">
+        <input class="form-control" type="time" name="llegada" placeholder="Hora Llegada">
+    </label>
+    <label for="numeroBines">
+        <input class="form-control" type="number" name="numeroBines" placeholder="Bines/gavetas">
+    </label>
+    <label for="remitido">
+        <input class="form-control" type="number" name="remitido" placeholder="Libraje">
+    </label>
+    
+    <button type="submit" class="btn btn-primary">Ingresar</button>
+    
+    </form>
+
+
+<% var item = 0; %> 
+
+<h1 class="text-center my-5 ">INGRESO MP - BRISAS  <%= fecha %> </h1>
+
+<div class="container my-3">
+    <form class="h-25 d-flex" action="/bitacora" method="get">
+        <input class="form-control w-25" type="date" id="fechaBusqueda" name="fechaBusqueda">
+        <button class="btn btn-success mx-3">Buscar por Fecha</button>
+        </form>
+</div>
+
+<div class="grid-ingreso w-100">
+    <span class="item border border-dark py-1  text-center">item</span>
+    <span class="lote border border-dark py-1 text-center">lote</span>
+    <span class="proveedor border border-dark py-1  text-center">proveedor</span>
+    <span class="piscina border border-dark py-1  text-center">piscina</span>
+    <span class="llegada border border-dark py-1  text-center">llegada</span>
+    <span class="bines border border-dark py-1  text-center">#Bines</span> 
+    <span class="libras border border-dark py-1  text-center">Libras</span>
+</div>
+<%for (let ingreso of ingresos) {%>
+    <% 
+    const date = ingreso.fecha; 
+    const llegada = date.getHours() + ":" + date.getMinutes();
+    
+    item += 1
+    %> <div class="grid-ingreso w-100">
+        <span class="item border border-dark py-1  text-center"><a href="/show/<%=ingreso._id%>"><%=item%></a></span>
+        <span class="lote border border-dark py-1  text-center" ><a href="/lote/<%= ingreso.lote %>"><%=ingreso.lote%></a></span>
+        <span class="proveedor border border-dark py-1 text-center"><%=ingreso.proveedor%></span>
+        <span class="piscina border border-dark py-1  text-center" ><%=ingreso.piscina%></span>
+        <span class="llegada border border-dark py-1  text-center" ><%=ingreso.llegada%></span>
+        <span class="bines border border-dark py-1  text-center"><%=ingreso.numeroBines%></span> 
+        <span class="libras border border-dark py-1 text-center" ><%=ingreso.remitido%></span>
+    </div>
+   
+              
+    <% } %> 
+

@@ -1,0 +1,30 @@
+<% layout('layouts/boilerplate') -%>
+<h2>EDIT INGRESO</h2>
+<form action="/new" method="post">
+    
+    <label for="lote">
+        <input class="form-control" type="number" name="lote" placeholder="Lote">
+    </label>
+
+<label for="proveedor">
+    <input class="form-control" type="text" name="proveedor" placeholder="Proveedor">
+</label>
+<label for="piscina">
+    <input class="form-control" type="text" name="piscina" placeholder="Piscina">
+</label>
+<label for="fecha">
+    <input class="form-control" type="date" name="fecha" >  
+</label>
+<label for="llegada">
+    <input class="form-control" type="time" name="llegada" placeholder="Hora Llegada">
+</label>
+<label for="numeroBines">
+    <input class="form-control" type="number" name="numeroBines" placeholder="Bines/gavetas">
+</label>
+<label for="remitido">
+    <input class="form-control" type="number" name="remitido" placeholder="Libraje">
+</label>
+
+<button type="submit" class="btn btn-primary">Ingresar</button>
+
+</form>

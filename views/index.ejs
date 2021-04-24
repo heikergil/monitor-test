@@ -1,29 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<% layout('layouts/boilerplate') -%>
 
+    <h1>SHOWING LOGS FROM <%= fecha  %> </h1>
+
+    <form action="/index" method="get">
+<input type="date" id="fechaBusqueda" name="fechaBusqueda">
+<button>find by date</button>
+    </form>
+
+    <h2>Nuevo Ingreso</h2>
+    <form action="/new" method="post">
+        <label for="lote">Lote:
+            <input type="number" name="lote">
+        </label>
     
-</head>
-<body>
+    <label for="proveedor">
+        Razon Social:
+        <input type="text" name="proveedor">
+    </label>
+    <label for="piscina">
+        Piscina:
+        <input type="text" name="piscina">
+    </label>
+    <label for="fecha">
+        <input type="date" name="fecha" >  
+    </label>
+    <label for="llegada">
+        Hora Llegada:
+        <input type="time" name="llegada">
+    </label>
+    <label for="numeroBines">
+        Numero de Bines/Gavetas:
+        <input type="number" name="numeroBines">
+    </label>
+    <label for="remitido">
+        Libraje:
+        <input type="number" name="remitido">
+    </label>
+    
+    <button>Ingresar</button>
+    
+    </form>
+
+
  <%for (let ingreso of ingresos) {%>
     <% 
     date = ingreso.llegada;
     // var time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
     %> 
-    <ul>
-    <li><%= ingreso.lote  %> </li>
+    <ul class="d-flex w-100 justify-content-evenly border border-dark">
+    <li><a href="/show/<%= ingreso.lote %>"><%=ingreso.lote%></a> </li>
     <li><%= ingreso.proveedor  %> </li>
     <li><%= ingreso.piscina  %> </li>
-    <li><%= ingreso.llegada  %> </li>
+    <li><%= ingreso.fecha.toISOString()  %> </li>
+    <li> <a href="/ingreso/<%= ingreso._id%>"><%=ingreso.llegada%></a> </li>
     <li><%= ingreso.numeroBines  %> </li>
     <li><%= ingreso.remitido  %> </li>
+    <form action="/delete/<%=ingreso._id%>?_method=DELETE" method="POST">
+        <button>DELETE!</button>
+    </form>
 </ul>
     <% } %> 
-        
-        
-</body>
-</html>

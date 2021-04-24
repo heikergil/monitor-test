@@ -1,0 +1,27 @@
+span {
+    border: solid 1px black;
+}
+
+.grid-ingreso {
+    display: grid;
+    grid-template-columns: 0.5fr 2fr 3fr 2fr 1fr 0.5fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 0px 0px;
+    grid-template-areas:
+      "item lote proveedor piscina llegada bines libras";
+  }
+  
+  .item { grid-area: item; }
+  
+  .lote { grid-area: lote; }
+  
+  .proveedor { grid-area: proveedor; }
+  
+  .piscina { grid-area: piscina; }
+  
+  .llegada { grid-area: llegada; }
+  
+  .bines { grid-area: bines; }
+  
+  .libras { grid-area: libras; }
+  
