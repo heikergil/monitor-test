@@ -45,7 +45,9 @@ res.send('This is monitor test APP, please go to  http://localhost:3000/bitacora
 
 
 app.post('/new', wrapAsync(async (req, res, next) => {
+        console.log(req.body);
         const nuevoIngreso = new Ingreso(req.body)
+<<<<<<< HEAD
 
         // TO DO: MAKE SETTING THE DATE AND TIME MANUALLY WORK!
         if (nuevoIngreso.fecha) {
@@ -58,6 +60,12 @@ app.post('/new', wrapAsync(async (req, res, next) => {
             await nuevoIngreso.save()
             res.redirect('bitacora')  
         }
+=======
+        await nuevoIngreso.save();
+        res.redirect('/bitacora')
+
+        
+>>>>>>> 310ce984d9931e1dad5cd41f4b04f1cc646f89f8
        
 }))
 
@@ -116,8 +124,14 @@ if (fechaBusqueda) {
     console.log(fechaAuto);
     console.log(autoPlus);
     const options = {year: 'numeric', month: 'numeric', day: 'numeric' };
+<<<<<<< HEAD
+=======
+    console.log(fechaAuto.UTC())
+    console.log(autoPlus)
+>>>>>>> 310ce984d9931e1dad5cd41f4b04f1cc646f89f8
     const ingresos = await Ingreso.find({"fecha" : {$gte: fechaAuto, $lt: autoPlus}});
-    res.render('bitacora', { ingresos, fechaBusqueda: fechaAuto, fecha: fechaAuto.toLocaleDateString('en-GB', options)});
+    res.render('bitacora', { ingresos, fechaBusqueda: fechaAuto.toLocaleDateString(), fecha: fechaAuto});
+    // .toLocaleDateString('en-GB', options)
 }
 
      
@@ -141,7 +155,7 @@ app.get('/lote/:lote', wrapAsync( async (req, res, next) => {
 app.delete('/delete/:id', wrapAsync(async(req, res, next) => {
         const { id } = req.params;
         const ingreso = await Ingreso.findByIdAndDelete(id)
-        res.redirect('/ingreso')
+        res.redirect('/bitacora')
 }))
 
 app.listen(3000, () => {

@@ -1,3 +1,4 @@
+const { text } = require('express');
 const { DateTime } = require('luxon');
 const mongoose = require('mongoose');
 
@@ -17,6 +18,10 @@ const ingresoSchema = new mongoose.Schema({
     },
     fecha: {
         type: Date,
+        required: true,
+    },
+    llegada: {
+        type:String,
         required: true,
     },
     numeroBines: {
