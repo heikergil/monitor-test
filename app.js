@@ -40,23 +40,22 @@ function wrapAsync(fn) {
 
 app.get('/', (req, res) => {
 
-res.send('This is monitor test APP, please go to  http://localhost:3000/index ')
+res.send('This is monitor test APP, please go to  http://localhost:3000/bitacora ')
 })
 
 
 app.post('/new', wrapAsync(async (req, res, next) => {
         const nuevoIngreso = new Ingreso(req.body)
+
+        // TO DO: MAKE SETTING THE DATE AND TIME MANUALLY WORK!
         if (nuevoIngreso.fecha) {
             nuevoIngreso.fecha = new Date(nuevoIngreso.fecha);
             await nuevoIngreso.save()
-            console.log(nuevoIngreso);
             res.redirect('bitacora'); 
         } else {
             var date = new Date();
-            console.log(date);
             nuevoIngreso.fecha = date;
             await nuevoIngreso.save()
-            console.log(nuevoIngreso);
             res.redirect('bitacora')  
         }
        
@@ -75,17 +74,18 @@ app.get('/show/:id', wrapAsync(async (req, res, next) => {
 app.get('/update/:id', wrapAsync(async (req, res, next)=> {
         const { id } = req.params;
         const ingreso = await Ingreso.findById(id);
-        const fecha = date.toISODate();
-        const llegada = new DateTime(ingreso.fecha);
-        const hora = date.toFormat('HH:mm');
-        res.render('update', { ingreso, fecha, llegada:hora })   
+        const date = ingreso.fecha; 
+        const llegada = date.getHours() + ":" + date.getMinutes();
+        console.log(ingreso.fecha);
+        console.log(llegada);
+        res.render('update', { ingreso, llegada })   
 }))
 
-app.put('/ingreso/update/:id', wrapAsync(async (req, res, next) => {
-        const { id } = req.params;
-        const ingreso = await Ingreso.findByIdAndUpdate(id, req.body, {runValidators: true, new: true, useFindAndModify: false })
-        res.render('ingreso', { ingreso })     
-}))
+// app.put('/ingreso/update/:id', wrapAsync(async (req, res, next) => {
+//         const { id } = req.params;
+//         const ingreso = await Ingreso.findByIdAndUpdate(id, req.body, {runValidators: true, new: true, useFindAndModify: false })
+//         res.render('update', { ingreso })     
+// }))
 
 app.use((err, req,res, next) => {
     const { status = 500, message = 'Something Went Wrong' } = err;
@@ -96,28 +96,26 @@ app.use((err, req,res, next) => {
 app.get('/bitacora', wrapAsync(async (req, res, next) => {
     
     const { fechaBusqueda } = req.query;
-
+    // when user input a date
     const date = new Date(fechaBusqueda)
     date.setUTCHours(0,0,0,0);
     const datePlus = new Date(date);
     datePlus.setDate(datePlus.getDate() + 1)
-
+    // gets current date automatically
     const fechaAuto = new Date();
+    console.log(fechaAuto, "first")
     const horaAuto = fechaAuto.setUTCHours(0,0,0,0);
-    console.log(horaAuto);
-    console.log('fechaauto');
     const autoPlus = new Date(horaAuto);
     autoPlus.setDate(autoPlus.getDate() + 1)
 
 if (fechaBusqueda) {
-    console.log(date)
-    console.log(datePlus)
+    
     const ingresos = await Ingreso.find({"fecha" : {$gte: date, $lt: datePlus}});
     res.render('bitacora', { ingresos, fecha: fechaBusqueda });
 } else {
+    console.log(fechaAuto);
+    console.log(autoPlus);
     const options = {year: 'numeric', month: 'numeric', day: 'numeric' };
-    console.log(fechaAuto)
-    console.log(autoPlus)
     const ingresos = await Ingreso.find({"fecha" : {$gte: fechaAuto, $lt: autoPlus}});
     res.render('bitacora', { ingresos, fechaBusqueda: fechaAuto, fecha: fechaAuto.toLocaleDateString('en-GB', options)});
 }
